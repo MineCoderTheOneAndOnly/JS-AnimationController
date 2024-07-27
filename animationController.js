@@ -3,7 +3,8 @@ class AnimationController {
         this.animationVariables = {
             centerX:{
                 "type":"centerX"
-            }
+            },
+            fiveSecs: 5000
         }
 
         this.animationClasses = {
@@ -15,6 +16,9 @@ class AnimationController {
             },
             "expand1000Right":{
                 "width": "1000px"
+            },
+            "fadeTo":{
+                "opacity":0.5
             }
         }
 
@@ -24,7 +28,7 @@ class AnimationController {
                 "animationDetails": [
                     {
                         "type":"animations",
-                        "duration": 5000,
+                        "duration": {"type":"variable", "name":"fiveSecs"},
                         "animations": ["expand500Right"],
                         "next": [
                             {
@@ -78,8 +82,9 @@ class AnimationController {
                                                                                 "selector": "#test",
                                                                                 "animationDetails": [
                                                                                     {
-                                                                                        "type":"fadeIn",
+                                                                                        "type":"fadeTo",
                                                                                         "duration": 5000,
+                                                                                        "opacity": 0.5,
                                                                                         "next": [
                                                 
                                                                                         ]
@@ -153,13 +158,24 @@ class AnimationController {
     }
 
     parseDynamicValue(obj, dynamicaValue){
+        if(!dynamicaValue.hasOwnProperty("type"))
+            return dynamicaValue
+
         switch(dynamicaValue["type"]){
-            case "centerX":
+            case "centerX"://{"type":"centerX"}
                 return obj.width() / 2;
-            case "centerY":
+            case "centerY"://{"type":"centerY"}
                 return obj.height() / 2;
-            case "value":
+            case "value"://{"type":"value", "value":<VALUE>}
                 return dynamicaValue["value"]
+            case "variable"://{"type":"variable", "name":<VARNAME>}
+                if(this.animationVariables.hasOwnProperty(dynamicaValue["name"])){
+                    var varDef = this.animationVariables[dynamicaValue["name"]];//return dynamicValue structure
+                    return this.parseDynamicValue(obj, varDef);
+                }
+                return 0;
+            default:
+                return dynamicaValue;
         }
     }
 
@@ -175,7 +191,7 @@ class AnimationController {
 
 
     doAnimation(animationDetails, objToAnim){
-        var duration = animationDetails["duration"];
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
         var style = this.createAnimationStyle(animationDetails);
         objToAnim.animate(
             style,
@@ -190,26 +206,18 @@ class AnimationController {
     }
 
     doDelay(animationDetails, objToAnim){
-        var duration = animationDetails["duration"];
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
         objToAnim.delay(duration).queue(() => {
             this.runAnimation(animationDetails["next"]);
         });
     }
 
     doFadeIn(animationDetails, objToAnim){
-        var duration = animationDetails["duration"];
-        objToAnim.fadeIn({
-            duration: duration,
-            queue: false}, 
-            () => {
-                this.runAnimation(animationDetails["next"]);
-            }
-        );
-    }
-
-    doFadeOut(animationDetails, objToAnim){
-        var duration = animationDetails["duration"];
-        objToAnim.fadeOut(
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        objToAnim.animate(
+            {
+                opacity: 1
+            },
             {
                 duration: duration,
                 queue: false,
@@ -218,16 +226,53 @@ class AnimationController {
                 }
             }
         );
+        /* objToAnim.fadeIn({
+            duration: duration,
+            queue: false}, 
+            () => {
+                this.runAnimation(animationDetails["next"]);
+            }
+        ); */
     }
 
-    doFadeTo(animationDetails, objToAnim){
-        var duration = animationDetails["duration"];
-        var opacity = animationDetails["opacity"];
-        objToAnim.fadeTo(
+    doFadeOut(animationDetails, objToAnim){
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        objToAnim.animate(
+            {
+                opacity: 0
+            },
             {
                 duration: duration,
                 queue: false,
                 done: () => {
+                    this.runAnimation(animationDetails["next"]);
+                }
+            }
+        );
+        /* objToAnim.fadeOut(
+            {
+                duration: duration,
+                queue: false,
+                done: () => {
+                    this.runAnimation(animationDetails["next"]);
+                }
+            }
+        ); */
+    }
+
+    doFadeTo(animationDetails, objToAnim){
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        var opacity = this.parseDynamicValue(objToAnim, animationDetails["opacity"]);
+        console.log(opacity + " => " + duration);
+        objToAnim.animate(
+            {
+                opacity: opacity
+            },
+            {
+                duration: duration,
+                queue: false,
+                done: () => {
+                    console.log("Done");
                     this.runAnimation(animationDetails["next"]);
                 }
             }
