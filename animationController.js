@@ -9,7 +9,8 @@ class AnimationController {
 
         this.animationClasses = {
             "expand500Right":{
-                "width": "500px"
+                //"width": "500px"
+                "width": {"type":"variable", "name":"centerX"}
             },
             "expand500Down":{
                 "height": "500px"
@@ -23,6 +24,19 @@ class AnimationController {
         }
 
         this.animationTree = [
+            {
+                "selector": "#test",
+                "animationDetails": [
+                    {
+                        "type":"scrollBottom",
+                        "duration": 20000,
+                        "next": []
+                    }
+                ]
+            }
+        ];
+
+        /*this.animationTree = [
             {
                 "selector": "#test",
                 "animationDetails": [
@@ -118,7 +132,7 @@ class AnimationController {
                     }
                 ]
             }
-        ];
+        ];*/
     }
 
     startAnimation() {
@@ -153,11 +167,22 @@ class AnimationController {
                 case "fadeTo":
                     this.doFadeTo(animationDetails, objToAnim);
                     break;
+                case "scrollTop":
+                    this.doScrollTop(animationDetails, objToAnim);
+                    break;
+                case "scrollBottom":
+                    this.doScrollBottom(animationDetails, objToAnim);
+                    break;
+                case "scrollTo":
+                    this.doScrollTo(animationDetails, objToAnim);
+                    break;
             }
         }
     }
 
     parseDynamicValue(obj, dynamicaValue){
+        console.log(dynamicaValue);
+
         if(!dynamicaValue.hasOwnProperty("type"))
             return dynamicaValue
 
@@ -192,12 +217,13 @@ class AnimationController {
 
     doAnimation(animationDetails, objToAnim){
         var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
-        var style = this.createAnimationStyle(animationDetails);
+        var style = this.createAnimationStyle(animationDetails, objToAnim);
         objToAnim.animate(
             style,
             {
                 duration: duration,
                 queue: false,
+                easing: "linear",
                 done: () => {
                     this.runAnimation(animationDetails["next"]);
                 }
@@ -221,6 +247,7 @@ class AnimationController {
             {
                 duration: duration,
                 queue: false,
+                easing: "linear",
                 done: () => {
                     this.runAnimation(animationDetails["next"]);
                 }
@@ -244,6 +271,7 @@ class AnimationController {
             {
                 duration: duration,
                 queue: false,
+                easing: "linear",
                 done: () => {
                     this.runAnimation(animationDetails["next"]);
                 }
@@ -263,7 +291,6 @@ class AnimationController {
     doFadeTo(animationDetails, objToAnim){
         var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
         var opacity = this.parseDynamicValue(objToAnim, animationDetails["opacity"]);
-        console.log(opacity + " => " + duration);
         objToAnim.animate(
             {
                 opacity: opacity
@@ -271,11 +298,64 @@ class AnimationController {
             {
                 duration: duration,
                 queue: false,
+                easing: "linear",
                 done: () => {
                     console.log("Done");
                     this.runAnimation(animationDetails["next"]);
                 }
             }
+        );
+    }
+
+    doScrollTop(animationDetails, objToAnim){
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        objToAnim.animate(
+            {
+                scrollTop:0
+            },
+            {
+                duration: duration,
+                queue: false,
+                easing: "linear",
+                done: () => {
+                    this.runAnimation(animationDetails["next"]);
+                }
+            },
+        );
+    }
+
+    doScrollBottom(animationDetails, objToAnim){
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        objToAnim.animate(
+            {
+                scrollTop:objToAnim.prop("scrollHeight")
+            },
+            {
+                duration: duration,
+                queue: false,
+                easing: "linear",
+                done: () => {
+                    this.runAnimation(animationDetails["next"]);
+                }
+            },
+        );
+    }
+
+    doScrollTo(animationDetails, objToAnim){
+        var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        var to = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        objToAnim.animate(
+            {
+                scrollTop:to
+            },
+            {
+                duration: duration,
+                queue: false,
+                easing: "linear",
+                done: () => {
+                    this.runAnimation(animationDetails["next"]);
+                }
+            },
         );
     }
 
@@ -291,7 +371,7 @@ class AnimationController {
 
 
     
-    createAnimationStyle(details) {
+    createAnimationStyle(details, objToAnim) {
         var styleToAnimate = {};
 
         for(var i = 0; i < details["animations"].length; i++){
@@ -299,12 +379,13 @@ class AnimationController {
             if(this.animationClasses.hasOwnProperty(animName)){
                 var props = this.animationClasses[animName];
                 for (var key in props) {
-                    styleToAnimate[key] = props[key];
+                    //styleToAnimate[key] = props[key];
+                    styleToAnimate[key] = this.parseDynamicValue(objToAnim, props[key]);
                 }
             }
-
         }
 
+        console.log(styleToAnimate);
         return styleToAnimate;
     }
 }
