@@ -1,10 +1,10 @@
 class AnimationController {
     constructor() {
         this.animationVariables = {
-            centerX:{
+            /*centerX:{
                 "type":"centerX"
             },
-            fiveSecs: 5000
+            fiveSecs: 5000*/
         }
 
         this.animationClasses = {
@@ -204,14 +204,24 @@ class AnimationController {
                 return obj.width() / 2;
             case "centerY"://{"type":"centerY"}
                 return obj.height() / 2;
+            case "posX"://{"type":"centerX"}
+                return obj.position().left;
+            case "posY"://{"type":"centerY"}
+                return obj.position().top;
             case "value"://{"type":"value", "value":<VALUE>}
                 return dynamicValue["value"]
             case "variable"://{"type":"variable", "name":<VARNAME>}
                 if(this.animationVariables.hasOwnProperty(dynamicValue["name"])){
                     var varDef = this.animationVariables[dynamicValue["name"]];//return dynamicValue structure
-                    return this.parseDynamicValue(obj, varDef);
+                    var res = this.parseDynamicValue(obj, varDef);
+                    console.log("VarRes: " + res);
+                    return res;
                 }
-                return 0;
+                else{
+                    console.log("Var not found: 0");
+                    console.log(this.animationVariables);
+                    return 0;
+                }
             case "add"://{"type":"add", "a":<VALUE1>, "b":<VALUE2>}
                 var a = this.parseDynamicValue(obj, dynamicValue["a"]);
                 var b = this.parseDynamicValue(obj, dynamicValue["b"]);
