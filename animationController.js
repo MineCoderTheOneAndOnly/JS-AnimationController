@@ -8,7 +8,7 @@ class AnimationController {
         }
 
         this.animationClasses = {
-            "expand500Right":{
+            /*"expand500Right":{
                 //"width": "500px"
                 "width": {"type":"variable", "name":"centerX"}
             },
@@ -20,10 +20,23 @@ class AnimationController {
             },
             "fadeTo":{
                 "opacity":0.5
-            }
+            }*/
         }
 
-        this.animationTree = [
+    this.animationTree = [
+        /* {
+            "selector": "#test",
+            "animationDetails": [
+                {
+                    "type":"scrollBottom",
+                    "duration": 20000,
+                    "next": []
+                }
+            ]
+        } */
+    ];
+
+        /*this.animationTree = [
             {
                 "selector": "#test",
                 "animationDetails": [
@@ -34,7 +47,7 @@ class AnimationController {
                     }
                 ]
             }
-        ];
+        ];*/
 
         /*this.animationTree = [
             {
@@ -180,27 +193,46 @@ class AnimationController {
         }
     }
 
-    parseDynamicValue(obj, dynamicaValue){
-        console.log(dynamicaValue);
+    parseDynamicValue(obj, dynamicValue){
+        console.log(dynamicValue);
 
-        if(!dynamicaValue.hasOwnProperty("type"))
-            return dynamicaValue
+        if(!dynamicValue.hasOwnProperty("type"))
+            return dynamicValue
 
-        switch(dynamicaValue["type"]){
+        switch(dynamicValue["type"]){
             case "centerX"://{"type":"centerX"}
                 return obj.width() / 2;
             case "centerY"://{"type":"centerY"}
                 return obj.height() / 2;
             case "value"://{"type":"value", "value":<VALUE>}
-                return dynamicaValue["value"]
+                return dynamicValue["value"]
             case "variable"://{"type":"variable", "name":<VARNAME>}
-                if(this.animationVariables.hasOwnProperty(dynamicaValue["name"])){
-                    var varDef = this.animationVariables[dynamicaValue["name"]];//return dynamicValue structure
+                if(this.animationVariables.hasOwnProperty(dynamicValue["name"])){
+                    var varDef = this.animationVariables[dynamicValue["name"]];//return dynamicValue structure
                     return this.parseDynamicValue(obj, varDef);
                 }
                 return 0;
+            case "add"://{"type":"add", "a":<VALUE1>, "b":<VALUE2>}
+                var a = this.parseDynamicValue(obj, dynamicValue["a"]);
+                var b = this.parseDynamicValue(obj, dynamicValue["b"]);
+                return a + b;
+            case "sub"://{"type":"sub", "a":<VALUE1>, "b":<VALUE2>}
+                var a = this.parseDynamicValue(obj, dynamicValue["a"]);
+                var b = this.parseDynamicValue(obj, dynamicValue["b"]);
+                return a - b;
+            case "mul"://{"type":"mul", "a":<VALUE1>, "b":<VALUE2>}
+                var a = this.parseDynamicValue(obj, dynamicValue["a"]);
+                var b = this.parseDynamicValue(obj, dynamicValue["b"]);
+                return a * b;
+            case "div"://{"type":"div", "a":<VALUE1>, "b":<VALUE2>}
+                var a = this.parseDynamicValue(obj, dynamicValue["a"]);
+                var b = this.parseDynamicValue(obj, dynamicValue["b"]);
+                return a / b;
+            case "parent"://{"type":"parent", "nextOperation":<DYNAMICVALUE>}
+                var parent = obj.parent();
+                return this.parseDynamicValue(parent, dynamicValue["nextOperation"]);
             default:
-                return dynamicaValue;
+                return dynamicValue;
         }
     }
 
