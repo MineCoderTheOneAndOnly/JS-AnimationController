@@ -194,19 +194,21 @@ class AnimationController {
     }
 
     parseDynamicValue(obj, dynamicValue){
-        console.log(dynamicValue);
-
         if(!dynamicValue.hasOwnProperty("type"))
             return dynamicValue
 
         switch(dynamicValue["type"]){
-            case "centerX"://{"type":"centerX"}
+            case "globalCenterX"://{"type":"centerX"}
+                return obj.offset().left + obj.width() / 2;
+            case "globalCenterY"://{"type":"centerY"}
+                return obj.offset().top + obj.height() / 2;
+            case "localCenterX"://{"type":"centerX"}
                 return obj.width() / 2;
-            case "centerY"://{"type":"centerY"}
+            case "localCenterY"://{"type":"centerY"}
                 return obj.height() / 2;
-            case "posX"://{"type":"centerX"}
+            case "posX"://{"type":"posX"}
                 return obj.position().left;
-            case "posY"://{"type":"centerY"}
+            case "posY"://{"type":"posY"}
                 return obj.position().top;
             case "value"://{"type":"value", "value":<VALUE>}
                 return dynamicValue["value"]
@@ -214,12 +216,9 @@ class AnimationController {
                 if(this.animationVariables.hasOwnProperty(dynamicValue["name"])){
                     var varDef = this.animationVariables[dynamicValue["name"]];//return dynamicValue structure
                     var res = this.parseDynamicValue(obj, varDef);
-                    console.log("VarRes: " + res);
                     return res;
                 }
                 else{
-                    console.log("Var not found: 0");
-                    console.log(this.animationVariables);
                     return 0;
                 }
             case "add"://{"type":"add", "a":<VALUE1>, "b":<VALUE2>}
@@ -276,6 +275,7 @@ class AnimationController {
     doDelay(animationDetails, objToAnim){
         var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
         objToAnim.delay(duration).queue(() => {
+            objToAnim.dequeue();
             this.runAnimation(animationDetails["next"]);
         });
     }
@@ -342,7 +342,6 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    console.log("Done");
                     this.runAnimation(animationDetails["next"]);
                 }
             }
@@ -427,7 +426,6 @@ class AnimationController {
             }
         }
 
-        console.log(styleToAnimate);
         return styleToAnimate;
     }
 }
