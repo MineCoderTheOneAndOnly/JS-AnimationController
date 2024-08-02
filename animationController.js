@@ -1,151 +1,16 @@
 class AnimationController {
     constructor() {
         this.animationVariables = {
-            /*centerX:{
-                "type":"centerX"
-            },
-            fiveSecs: 5000*/
+            
         }
 
         this.animationClasses = {
-            /*"expand500Right":{
-                //"width": "500px"
-                "width": {"type":"variable", "name":"centerX"}
-            },
-            "expand500Down":{
-                "height": "500px"
-            },
-            "expand1000Right":{
-                "width": "1000px"
-            },
-            "fadeTo":{
-                "opacity":0.5
-            }*/
+            
         }
 
-    this.animationTree = [
-        /* {
-            "selector": "#test",
-            "animationDetails": [
-                {
-                    "type":"scrollBottom",
-                    "duration": 20000,
-                    "next": []
-                }
-            ]
-        } */
-    ];
-
-        /*this.animationTree = [
-            {
-                "selector": "#test",
-                "animationDetails": [
-                    {
-                        "type":"scrollBottom",
-                        "duration": 20000,
-                        "next": []
-                    }
-                ]
-            }
-        ];*/
-
-        /*this.animationTree = [
-            {
-                "selector": "#test",
-                "animationDetails": [
-                    {
-                        "type":"animations",
-                        "duration": {"type":"variable", "name":"fiveSecs"},
-                        "animations": ["expand500Right"],
-                        "next": [
-                            {
-                                "selector": "#test",
-                                "animationDetails": [
-                                    {
-                                        "type":"animations",
-                                        "duration": 5000,
-                                        "animations": ["expand500Down"],
-                                        "next": [
-
-                                        ]
-                                    }
-                                ]
-                            },
-                            {
-                                "selector": "#test",
-                                "animationDetails": [
-                                    {
-                                        "type":"delay",
-                                        "duration": 2000,
-                                        "next": [
-                                            {
-                                                "selector": "#test",
-                                                "animationDetails": [
-                                                    {
-                                                        "type":"animations",
-                                                        "duration": 2000,
-                                                        "animations": ["expand1000Right"],
-                                                        "next": [
-                                                            {
-                                                                "selector": "#test",
-                                                                "animationDetails": [
-                                                                    {
-                                                                        "type":"fadeOut",
-                                                                        "duration": 2000,
-                                                                        "next": [
-                                                                            {
-                                                                                "selector": "#test1",
-                                                                                "animationDetails": [
-                                                                                    {
-                                                                                        "type":"fadeOut",
-                                                                                        "duration": 5000,
-                                                                                        "next": [
-                                                
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "selector": "#test",
-                                                                                "animationDetails": [
-                                                                                    {
-                                                                                        "type":"fadeTo",
-                                                                                        "duration": 5000,
-                                                                                        "opacity": 0.5,
-                                                                                        "next": [
-                                                
-                                                                                        ]
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "selector": "#test1",
-                "animationDetails": [
-                    {
-                        "type":"animations",
-                        "duration": 10000,
-                        "animations": ["expand500Right", "expand500Down"],
-                        "next": []
-                    }
-                ]
-            }
-        ];*/
+        this.animationTree = [
+            
+        ];
     }
 
     startAnimation() {
