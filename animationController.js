@@ -249,7 +249,7 @@ class AnimationController {
 
     doScrollTo(animationDetails, objToAnim){
         var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
-        var to = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
+        var to = this.parseDynamicValue(objToAnim, animationDetails["to"]);
         objToAnim.animate(
             {
                 scrollTop:to
