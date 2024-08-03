@@ -203,6 +203,25 @@ Applies a animation which scrolls to the defined `to` position. Only works when 
 
 
 ## Define Animation Classes
+The animation classes will be used in the animation type `animations` where the names of animation classes are defined in the `animations` list.  
+In the example the animation classes for the square animation are defined:  
+```json
+{
+   "moveRight":{
+      "left":"100px"
+   },
+   "moveDown":{
+      "top":"100px"
+   },
+   "moveLeft":{
+      "left":"0px"
+   },
+   "moveUp":{
+      "top":"0px"
+   }
+}
+```
+Here you need to define the animation `name` and then inside the animation object you define css style to where the element should be animated to.
 
 ## Define Animation Variables
 
