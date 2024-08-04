@@ -63,18 +63,6 @@ class AnimationController {
             return dynamicValue
 
         switch(dynamicValue["type"]){
-            case "globalCenterX"://{"type":"centerX"}
-                return obj.offset().left + obj.width() / 2;
-            case "globalCenterY"://{"type":"centerY"}
-                return obj.offset().top + obj.height() / 2;
-            case "localCenterX"://{"type":"centerX"}
-                return obj.width() / 2;
-            case "localCenterY"://{"type":"centerY"}
-                return obj.height() / 2;
-            case "posX"://{"type":"posX"}
-                return obj.position().left;
-            case "posY"://{"type":"posY"}
-                return obj.position().top;
             case "value"://{"type":"value", "value":<VALUE>}
                 return dynamicValue["value"]
             case "variable"://{"type":"variable", "name":<VARNAME>}
@@ -102,9 +90,6 @@ class AnimationController {
                 var a = this.parseDynamicValue(obj, dynamicValue["a"]);
                 var b = this.parseDynamicValue(obj, dynamicValue["b"]);
                 return a / b;
-            case "parent"://{"type":"parent", "nextOperation":<DYNAMICVALUE>}
-                var parent = obj.parent();
-                return this.parseDynamicValue(parent, dynamicValue["nextOperation"]);
             default:
                 return dynamicValue;
         }
