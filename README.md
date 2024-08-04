@@ -223,6 +223,62 @@ In the example the animation classes for the square animation are defined:
 ```
 Here you need to define the animation `name` and then inside the animation object you define css style to where the element should be animated to.
 
+## Dynamic Value
+Dynamic values can be used to define "formulars" which result in a value.  
+Dynamic value are used in:  
++ Values for the properties inside animation classes
++ Parameter value of animation types
+  
+If you want to extend a value in the code to use dynamic value you need to use the function: `parseDynamicValue(<JQUERY OBJECT FROM WHICH THE FUNCTION CAN GET STUF>, <DYNAMIC VALUE DEFINITION>)`
+
+## Dynamic Value Definitions
+If the Dynamic Value Definition has a property named `type` it will try to parse it otherwise it will return the input value.
+
+### "type":"value"
+Lets you define a static value its equal to using a normal value like `0` or `"Hello World"`
+```json
+{
+   "type":"value", 
+   "value":<VALUE>
+}
+```
+| Json Property | Description |
+| :--           | :--         |
+| `type`        | Defines the type of the definition |
+| `value`       | Defines the value which should be represented |
+
+### "type":"variable"
+Lets you get the value of a defined `Animation Variable` (Animation Variables can also use Dynamic Value)
+```json
+{
+   "type":"variable", 
+   "name":<VARNAME>
+}
+```
+| Json Property | Description |
+| :--           | :--         |
+| `type`        | Defines the type of the definition |
+| `name`        | Defines the name of the variable from where the value should be gotten |
+
+### "type":"add|sub|mul|div"
+Lets you use the following math operations:
++ add
++ subtract
++ multiply
++ divide
+```json
+{
+   "type":"add|sub|mul|div", 
+   "a":<DYNAMIC VALUE 1>,
+   "b":<DYNAMIC VALUE 2>
+}
+```
+| Json Property | Description |
+| :--           | :--         |
+| `type`        | Defines the type of the definition |
+| `a`           | Defines the first dynamic value of the math operation |
+| `b`           | Defines the second dynamic value of the math operation |
+
 ## Define Animation Variables
 
 ## Usage
