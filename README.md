@@ -317,3 +317,6 @@ To use the `animationController` you need to:
 2. Define Animation inside that array `controller.animationTree = [...]`
 3. Remember to define the used animation classes and variables in `controller.animationClasses` and `controller.animationVariables`
 4. After everythin is defined you can start the animation using `controller.startAnimation();`
+> [!IMPORTANT]  
+> JQUERY is required for animationController.js to work.
+> `<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>`
