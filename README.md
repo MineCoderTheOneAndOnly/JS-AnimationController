@@ -1,5 +1,25 @@
 # JS-AnimationController
 
+- [JS-AnimationController](#js-animationcontroller)
+  - [Description](#description)
+  - [Define Animation](#define-animation)
+  - [Animation Types](#animation-types)
+    - ["type":"animations"](#typeanimations)
+    - ["type":"delay"](#typedelay)
+    - ["type":"fadeIn"](#typefadein)
+    - ["type":"fadeOut"](#typefadeout)
+    - ["type":"fadeTo"](#typefadeto)
+    - ["type":"scrollTop"](#typescrolltop)
+    - ["type":"scrollBottom"](#typescrollbottom)
+    - ["type":"scrollTo"](#typescrollto)
+  - [Define Animation Classes](#define-animation-classes)
+  - [Dynamic Value](#dynamic-value)
+  - [Dynamic Value Definitions](#dynamic-value-definitions)
+    - ["type":"value"](#typevalue)
+    - ["type":"variable"](#typevariable)
+    - ["type":"add|sub|mul|div"](#typeaddsubmuldiv)
+  - [Define Animation Variables](#define-animation-variables)
+  - [Usage](#usage)
 
 
 ## Description
