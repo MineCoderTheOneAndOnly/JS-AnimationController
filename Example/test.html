@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" id="body" class="custom-scrollbar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="../animationController.js"></script>
+</head>
+<script>
+    $(document).ready(function () {
+        var controller = new AnimationController();
+
+        controller.animationClasses = {
+            moveRight: {
+                left: "100px"
+            }, moveDown: {
+                top: "100px"
+            }, moveLeft: {
+                left: "0px"
+            }, moveUp: {
+                top: "0px"
+            }
+        }
+
+        controller.animationTree = [
+            {
+                selector: ".square",
+                animationDetails: [
+                    {
+                        type: "animations",
+                        duration: 1000,
+                        animations: ["moveRight"],
+                        next: [
+                            {
+                                selector: ".square",
+                                animationDetails: [
+                                    {
+                                        type: "animations",
+                                        duration: 1000,
+                                        animations: ["moveDown"],
+                                        next: [
+                                            {
+                                                selector: ".square",
+                                                animationDetails: [
+                                                    {
+                                                        type: "animations",
+                                                        duration: 1000,
+                                                        animations: ["moveLeft"],
+                                                        next: [
+                                                            {
+                                                                selector: ".square",
+                                                                animationDetails: [
+                                                                    {
+                                                                        type: "animations",
+                                                                        duration: 1000,
+                                                                        animations: ["moveUp"],
+                                                                        next: [
+
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        controller.startAnimation();
+    });
+</script>
+<style>
+    body {
+        margin: 0px;
+    }
+
+    .square {
+        position: absolute;
+        background-color: green;
+        width: 100px;
+        height: 100px;
+    }
+</style>
+
+<body>
+    <div class="square"></div>
+</body>
+
+</html>
