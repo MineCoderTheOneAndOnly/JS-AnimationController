@@ -280,7 +280,20 @@ Lets you use the following math operations:
 | `b`           | Defines the second dynamic value of the math operation |
 
 ## Define Animation Variables
+You can define variables which can be used in dynamic values. The Value of an Animation Variable can be defined using dynamic value.  
+You can define variables like this:
+```json
+{
+   <VARIABLE NAME 1>:<DYNAMIC VALUE 1>
+   <VARIABLE NAME 2>:<DYNAMIC VALUE 2>,
+   <VARIABLE NAME X>:<DYNAMIC VALUE X>,
+}
+```
+Animation Variables can be read by the dynamic value definition `"type":"variable"`
 
 ## Usage
-
-## Example
+To use the `animationController` you need to:
+1. Create `AnimationController` object using `var controller = new AnimationController();`
+2. Define Animation inside that array `controller.animationTree = [...]`
+3. Remember to define the used animation classes and variables in `controller.animationClasses` and `controller.animationVariables`
+4. After everythin is defined you can start the animation using `controller.startAnimation();`
