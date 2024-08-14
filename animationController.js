@@ -46,7 +46,6 @@ class AnimationController {
                 var animName = animNameList[i];
                 animationDetails.push(this.animationTree[animName]);
             }
-            console.log(animationDetails);
             this.processAnimationDetails(animationDetails, objToAnim);
         }
     }
