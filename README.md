@@ -22,6 +22,7 @@
     - ["type":"add|sub|mul|div"](#typeaddsubmuldiv)
   - [Define Animation Variables](#define-animation-variables)
   - [Usage](#usage)
+  - [Start Animation with specific AnimationName](#start-animation-with-specific-animationname)
 
 
 
@@ -382,3 +383,10 @@ To use the `animationController` you need to:
 > [!IMPORTANT]  
 > JQUERY is required for animationController.js to work.  
 > `<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>`
+
+## Start Animation with specific AnimationName
+To start the animation with another animation name as defined in `"animtationStartPoint"` you can use the function `startWithAnimationNameForElement(animationName, elementSelector)`
+| Parameter | Description |
+| :--       | :--         |
+| `animationName` | The name of the animation |
+| `elementSelector` | A CSS selector string to define on which element the animation should be executed |

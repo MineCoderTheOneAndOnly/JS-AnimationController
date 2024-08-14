@@ -23,6 +23,12 @@ class AnimationController {
         }
     }
 
+    startWithAnimationNameForElement(animationName, elementSelector){//works only with the new json format
+        this.runAnimation_v2(
+            JSON.parse('{"' + elementSelector + '":["' + animationName + '"]}')
+        );
+    }
+
     runAnimation(processList) {
         for (var i = 0; i < processList.length; i++) {
             var selectorObj = processList[i];
