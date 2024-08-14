@@ -13,8 +13,14 @@ class AnimationController {
         ];
     }
 
-    startAnimation() {
-        this.runAnimation(this.animationTree);
+    startAnimation(useOldJsonFormat = true) {
+        this.useOldJsonFormat = useOldJsonFormat;
+        if(useOldJsonFormat){
+            this.runAnimation(this.animationTree);
+        }
+        else{
+            this.runAnimation_v2(this.animationTree["animtationStartPoint"]);
+        }
     }
 
     runAnimation(processList) {
@@ -22,6 +28,29 @@ class AnimationController {
             var selectorObj = processList[i];
             var objToAnim = $(selectorObj["selector"]);
             this.processAnimationDetails(selectorObj["animationDetails"], objToAnim);
+        }
+    }
+
+    runAnimation_v2(nextAnimation){//next{...} || "animationStartPoint":{...}
+        for (var selector in nextAnimation) {
+            var objToAnim = $(selector);
+            var animNameList = nextAnimation[selector]
+            var animationDetails = [];
+            for(var i in animNameList){
+                var animName = animNameList[i];
+                animationDetails.push(this.animationTree[animName]);
+            }
+            console.log(animationDetails);
+            this.processAnimationDetails(animationDetails, objToAnim);
+        }
+    }
+
+    handleNextAnimations(nextAnimation){
+        if(this.useOldJsonFormat){
+            this.runAnimation(nextAnimation)
+        }
+        else{
+            this.runAnimation_v2(nextAnimation)
         }
     }
 
@@ -116,7 +145,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             },
         );
@@ -126,7 +156,8 @@ class AnimationController {
         var duration = this.parseDynamicValue(objToAnim, animationDetails["duration"]);
         objToAnim.delay(duration).queue(() => {
             objToAnim.dequeue();
-            this.runAnimation(animationDetails["next"]);
+            //this.runAnimation(animationDetails["next"]);
+            this.handleNextAnimations(animationDetails["next"]);
         });
     }
 
@@ -141,7 +172,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             }
         );
@@ -165,7 +197,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             }
         );
@@ -192,7 +225,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             }
         );
@@ -209,7 +243,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             },
         );
@@ -226,7 +261,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             },
         );
@@ -244,7 +280,8 @@ class AnimationController {
                 queue: false,
                 easing: "linear",
                 done: () => {
-                    this.runAnimation(animationDetails["next"]);
+                    //this.runAnimation(animationDetails["next"]);
+                    this.handleNextAnimations(animationDetails["next"]);
                 }
             },
         );

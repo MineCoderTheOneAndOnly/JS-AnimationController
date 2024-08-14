@@ -23,7 +23,7 @@
             }
         }
 
-        controller.animationTree = [
+        /*controller.animationTree = [
             {
                 selector: ".square",
                 animationDetails: [
@@ -75,7 +75,44 @@
             }
         ];
 
-        controller.startAnimation();
+        controller.startAnimation();*/
+
+        controller.animationTree = {
+            "animtationStartPoint": {
+                ".square": ["animation0"],
+            },
+            "animation0": {
+                type: "animations",
+                duration: 1000,
+                animations: ["moveRight"],
+                next: {
+                    ".square": ["animation1"]
+                }
+            },
+            "animation1": {
+                type: "animations",
+                duration: 1000,
+                animations: ["moveDown"],
+                next: {
+                    ".square": ["animation2"]
+                }
+            },
+            "animation2": {
+                type: "animations",
+                duration: 1000,
+                animations: ["moveLeft"],
+                next: {
+                    ".square": ["animation3"]
+                }
+            },
+            "animation3": {
+                type: "animations",
+                duration: 1000,
+                animations: ["moveUp"],
+                next: {}
+            }
+        };
+        controller.startAnimation(false);
     });
 </script>
 <style>
