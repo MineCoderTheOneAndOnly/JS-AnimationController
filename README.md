@@ -3,6 +3,8 @@
 - [JS-AnimationController](#js-animationcontroller)
   - [Description](#description)
   - [Define Animation](#define-animation)
+    - [Old Format (NOT RECOMMENDED BUT STILL WORKING)](#old-format-not-recommended-but-still-working)
+    - [New Format (RECOMMENDED MORE USER FRIENDLY)](#new-format-recommended-more-user-friendly)
   - [Animation Types](#animation-types)
     - ["type":"animations"](#typeanimations)
     - ["type":"delay"](#typedelay)
@@ -22,12 +24,15 @@
   - [Usage](#usage)
 
 
+
 ## Description
 This Project was created to make the process of creating bigger animations easier by defining a animation tree in Json.
 
 ## Define Animation
 The animation is defined using a Json Format.  
 In the following example the animation will move a div element in a square:  
+
+### Old Format (NOT RECOMMENDED BUT STILL WORKING)
 ```json
 [
    {
@@ -93,6 +98,63 @@ In the following example the animation will move a div element in a square:
 | :--           | :--          |
 | `selector`    | The `selector` defines on which elements the animation should be applied |
 | `animationDetails`| The `animationDetails` define animation types which should be applied on the selected elements. All entries in the list will be applied and played parallel |
+
+### New Format (RECOMMENDED MORE USER FRIENDLY)
+```json
+{
+   "animtationStartPoint":{
+      ".square":[
+         "animation0"
+      ]
+   },
+   "animation0":{
+      "type":"animations",
+      "duration":1000,
+      "animations":[
+         "moveRight"
+      ],
+      "next":{
+         ".square":[
+            "animation1"
+         ]
+      }
+   },
+   "animation1":{
+      "type":"animations",
+      "duration":1000,
+      "animations":[
+         "moveDown"
+      ],
+      "next":{
+         ".square":[
+            "animation2"
+         ]
+      }
+   },
+   "animation2":{
+      "type":"animations",
+      "duration":1000,
+      "animations":[
+         "moveLeft"
+      ],
+      "next":{
+         ".square":[
+            "animation3"
+         ]
+      }
+   },
+   "animation3":{
+      "type":"animations",
+      "duration":1000,
+      "animations":[
+         "moveUp"
+      ],
+      "next":{
+         
+      }
+   }
+}
+```
 
 ## Animation Types
 ### "type":"animations"
