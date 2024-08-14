@@ -376,7 +376,7 @@ Animation Variables can be read by the dynamic value definition `"type":"variabl
 ## Usage
 To use the `animationController` you need to:
 1. Create `AnimationController` object using `var controller = new AnimationController();`
-2. Define Animation inside that array `controller.animationTree = [...]` if you use the old json format or define the Anumation inside the object `controller.animationTree = {...}` if you use the new json format
+2. Define Animation inside that array `controller.animationTree = [...]` if you use the old json format or define the Animation inside the object `controller.animationTree = {...}` if you use the new json format
 3. Remember to define the used animation classes and variables in `controller.animationClasses` and `controller.animationVariables`
 4. After everythin is defined you can start the animation using `controller.startAnimation();` or `controller.startAnimation(false);` if you defined the animation with the new json format
 > [!IMPORTANT]  
